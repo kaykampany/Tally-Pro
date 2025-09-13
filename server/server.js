@@ -1,4 +1,4 @@
-
+const path = require('path');
 const express = require('express');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
@@ -13,7 +13,9 @@ const DB_PATH = process.env.DB_PATH || './tally.db';
 
 const db = new Database(DB_PATH);
 db.pragma('journal_mode = WAL');
-db.exec(fs.readFileSync('./schema.sql','utf-8'));
+const schemaPath = path.join(__dirname, 'schema.sql');
+db.exec(fs.readFileSync(schemaPath, 'utf-8'));
+
 
 function signToken(payload){ return jwt.sign(payload, JWT_SECRET, { expiresIn: '7d' }); }
 function auth(role=null){

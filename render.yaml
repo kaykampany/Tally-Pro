@@ -2,8 +2,10 @@ services:
   - type: web
     name: tally-pro-server
     env: node
+    # Install ONLY the server deps (and allow native build of better-sqlite3)
     buildCommand: npm --prefix server install --build-from-source
-    startCommand: node server/server.js
+    # Start via the server's package.json "start" script
+    startCommand: npm --prefix server start
     envVars:
       - key: NODE_VERSION
         value: 20

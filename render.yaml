@@ -2,8 +2,13 @@ services:
   - type: web
     name: tally-pro-server
     env: node
-    buildCommand: npm --prefix server install --build-from-source
-    startCommand: node server/server.js
+
+    # Install ONLY server deps (native build for better-sqlite3)
+    buildCommand: cd server && npm ci --build-from-source
+
+    # IMPORTANT: run FROM the server folder so relative paths (./schema.sql) work
+    startCommand: cd server && node server.js
+
     envVars:
       - key: NODE_VERSION
         value: 20
@@ -11,8 +16,8 @@ services:
         generateValue: true
       - key: DB_PATH
         value: /opt/render/project/src/server/tally.db
-      - key: NPM_CONFIG_BUILD_FROM_SOURCE
-        value: "true"
+
+    # Persistent disk to keep SQLite file across deploys
     disk:
       name: tally-sqlite
       mountPath: /opt/render/project/src/server

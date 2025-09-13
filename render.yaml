@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: tally-pro-server
+    env: node
+    buildCommand: cd server && npm install
+    startCommand: cd server && node server.js
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DB_PATH
+        value: /opt/render/project/src/server/tally.db
+    disk:
+      name: tally-sqlite
+      mountPath: /opt/render/project/src/server
+      sizeGB: 1

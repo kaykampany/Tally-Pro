@@ -3,7 +3,7 @@ services:
     name: tally-pro-server
     env: node
     
-    rootDir: server 
+
     buildCommand: npm install
     startCommand: node server.js
     envVars:

@@ -4,8 +4,10 @@ services:
     env: node
     
 
-    buildCommand: npm install
-    startCommand: node server.js
+    buildCommand: cd server && npm install
+
+    startCommand: cd server && node server.js
+
     envVars:
       - key: NODE_VERSION
         value: 20

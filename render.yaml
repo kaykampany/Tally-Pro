@@ -2,21 +2,25 @@ services:
   - type: web
     name: tally-pro-server
     env: node
+    region: oregon
+    plan: free
     
-    buildCommand: |
-      rm -rf node_modules
-      npm install --build-from-source
-    startCommand: node server.js
+    buildCommand: npm install
+    startCommand: npm start
 
     envVars:
       - key: NODE_VERSION
         value: 20
+      - key: NODE_ENV
+        value: production
       - key: JWT_SECRET
         generateValue: true
+      - key: PORT
+        value: 10000
       - key: DB_PATH
-        value: /opt/render/project/src/server/tally.db
+        value: /opt/render/project/src/tally.db
+    
     disk:
       name: tally-sqlite
-      mountPath: /opt/render/project/src/server
+      mountPath: /opt/render/project/src
       sizeGB: 1
-
